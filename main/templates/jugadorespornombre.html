@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1> Busqueda de Jugador por Nombre </h1>
+{% endblock %}
+
+{% block contenido %}
+<table>
+	<td>
+<form id="formulario" method="post" action=''>{% csrf_token %}
+    <fieldset class="form-group">
+        <label for="nombrejugador" class="h4">Nombre del jugador</label>
+        <input class="form-control d-inline" type="text" name="nombrejugador" id="nombrejugador" placeholder="Nombre del jugador" />
+        <button class="btn btn-secondary btn-block d-inline mt-2" type="submit">Realizar búsqueda</button>
+    </fieldset class="form-group">
+</form>
+</td>
+</table>
+{% if jugadores %}
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center table-responsive">
+	<table id="table" class="display" style="width:95%">
+		<thead>
+			  <tr>
+				<th>Ranking</th>
+				<th>Avatar</th>
+				<th>Nombre</th>
+				<th>Servidor</th>
+				<th>Enlace al Perfil</th>
+				<th>Clasificación</th>
+				<th>Puntos de Liga</th>
+				<th>Numero de Victorias</th>
+			</tr>
+		</thead>
+	{% for row in jugadores %}
+		<tbody>
+			<tr>
+				<td>{{row.posicion}}</td>
+				<td><img src={{row.imagen}}></img></td>
+				<td>{{row.nombre}}</td>
+				<td>{{row.servidor}}</td>
+				<td><form action={{row.enlace}}><input type="submit" value="Perfil" /></form></td>
+				<td>{{row.sololiga}}</td>
+				<td>{{row.solopl}}</td>
+				<td>{{row.solovictorias}}</td>
+			</tr>	
+		</tbody>    
+	{% endfor %}
+	</table>
+</div>
+{% endif %}
+{% endblock %}

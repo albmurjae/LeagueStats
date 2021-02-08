@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1> Lista de Campeones </h1>
+{% endblock %}
+
+  {% block contenido %}
+		
+			  <table id="table" class="display" style="width:95%">
+				<thead>
+  					<tr>
+						<th>#</th>
+						<th onclick="sortTable(1)">Nombre </th>
+						<th>Fecha de Lanzamiento </th>
+						<th onclick="sortNumeric(3)">Porcentaje de Victoria (%)</th>
+						<th onclick="sortFloat(4)">Porcentaje de Baneo (%)</th>
+						<th onclick="sortFloat(5)">Popularidad (%)</th>
+					</tr>
+				</thead>
+			{% for row in campeones %}
+				<tbody>
+			    	<tr>
+						<td><img src={{row.imagen}}></img></td>
+						<td>{{row.nombre}}</td>
+						<td>{{row.fechaLanzamiento}}</td>
+						<td>{{row.winRate}}</td>
+						<td>{{row.banRate}}</td>
+						<td>{{row.popularidad}}</td>
+					</tr>	
+				</tbody>    
+			{% endfor %}
+			</table>
+  {% endblock %}
+  

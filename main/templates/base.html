@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='utf-8'>
+  
+  <style>
+  {% block style_css %}
+	#table table {
+	  border-spacing: 0;
+	}
+  table {
+	  width: 100%;
+    border: 1px solid rgb(255, 255, 255); 
+    border-radius: 2px solid snow;
+	}
+	
+	th {
+	  cursor: pointer;
+	  text-align: left;
+	  padding: 15px;
+    border: 1px solid #ddd;
+    background-color: lightsteelblue;
+	}
+  td {
+	  text-align: left;
+	  padding: 15px;
+    border: 1px solid #ddd;
+	}
+
+  #cabecera{
+    padding: 0;
+    width: 100%;
+  }
+
+  #cabecera li{ 
+    display: inline;
+	}
+
+  #cabecera li a {
+    font-family: Arial;
+    font-size: 18px;
+    text-decoration: none;
+    float: left;
+    padding: 12px;
+    background-color: #2175bc;
+    color: #fff;
+  }
+	#cabecera li a:hover {
+    background-color: #2586d7;
+    margin-top: -2;
+    padding-bottom: 12px;
+  }
+	tr:nth-child(even) {
+	  background-color: #f2f2f2;
+	}
+  {% endblock %}
+  </style>
+</head>
+<body>
+  <header> 
+  	{% block encabezado %}{% endblock %}
+    <ul id="cabecera">
+ 			<li><a href='/'>Inicio</a></li>
+			<li><a href='/campeones'>Lista de Campeones</a></li>
+			<li><a href='/jugadores'>Lista de Jugadores</a></li>
+			<li><a href='/campeonespornombre'>Buscar Campeones por Nombre</a></li>
+      <li><a href='/jugadorespornombre'>Buscar Jugadores por Nombre</a></li>
+      <li><a href='/jugadoresporservidor'>Mostrar Jugadores por Servidor</a></li>
+      <li><a href='/carga'>Cargar la BD</a></li>
+    </ul>
+	<hr>
+  </header>
+  <section>
+    {% block contenido %}{% endblock %}
+  </section>
+
+  <script>
+
+    function sortTable(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("table");
+      switching = true;
+      // Set the sorting direction to ascending:
+      dir = "asc";
+      /* Make a loop that will continue until
+      no switching has been done: */
+      while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+        } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+        }
+      }
+      }
+    }
+
+
+
+    function sortNumeric(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("table");
+      switching = true;
+      // Set the sorting direction to ascending:
+      dir = "asc";
+      /* Make a loop that will continue until
+      no switching has been done: */
+      while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+        if ((x.innerHTML) < (y.innerHTML)) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+        } else if (dir == "desc") {
+        if ((x.innerHTML) > (y.innerHTML)) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+        }
+      }
+      }
+    }
+
+    function sortFloat(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("table");
+      switching = true;
+      // Set the sorting direction to ascending:
+      dir = "asc";
+      /* Make a loop that will continue until
+      no switching has been done: */
+      while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 1; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
+        if (dir == "asc") {
+        if (parseFloat(x.innerHTML) < parseFloat(y.innerHTML)) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+        } else if (dir == "desc") {
+        if (parseFloat(x.innerHTML) > parseFloat(y.innerHTML)) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+        // Each time a switch is done, increase this count by 1:
+        switchcount ++;
+      } else {
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
+        if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+        }
+      }
+      }
+    }
+    </script>
+  
+  
+  {% block pie %}{% endblock %} 
+</body>
+</html>

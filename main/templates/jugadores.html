@@ -1,0 +1,39 @@
+
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1> Lista de Jugadores </h1>
+{% endblock %}
+
+  {% block contenido %}
+		
+			  <table id="table" class="display" style="width:95%">
+				<thead>
+  					<tr>
+						<th>Ranking</th>
+						<th>Avatar</th>
+						<th>Nombre</th>
+						<th>Servidor</th>
+						<th>Enlace al Perfil</th>
+						<th>Clasificación</th>
+						<th>Puntos de Liga</th>
+						<th>Numero de Victorias</th>
+					</tr>
+				</thead>
+			{% for row in jugadores %}
+				<tbody>
+			    	<tr>
+						<td>{{row.posicion}}</td>
+						<td><img src={{row.imagen}}></img></td>
+						<td>{{row.nombre}}</td>
+						<td>{{row.servidor}}</td>
+						<td><form action={{row.enlace}}><input type="submit" value="Perfil" /></form></td>
+						<td>{{row.sololiga}}</td>
+						<td>{{row.solopl}}</td>
+						<td>{{row.solovictorias}}</td>
+					</tr>	
+				</tbody>    
+			{% endfor %}
+			</table>
+  {% endblock %}
+  

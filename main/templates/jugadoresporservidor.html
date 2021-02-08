@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1> Jugadores Agrupados por Servidor </h1>
+{% endblock %}
+
+{% block contenido %}
+<table>
+	<td>
+			{% regroup jugadores by servidor as grouped %}
+	    	{% for group in grouped %}
+		    	<h3>Servidor: {{group.grouper}} ({{group.list|length}} jugadores)</h3>
+            {% endfor %}
+    </td>
+</table>
+{% endblock %}

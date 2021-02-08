@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1> Busqueda de Campeon por Nombre </h1>
+{% endblock %}
+
+{% block contenido %}
+<table>
+	<td>
+	<form id="formulario" method="post" action=''>{% csrf_token %}
+		<fieldset class="form-group">
+			<label for="nombrecampeon" class="h4">Nombre del campeón</label>
+			<input type="text" name="nombrecampeon" id="nombrecampeon" placeholder="Nombre del campeón" />
+			<button type="submit">Realizar búsqueda</button>
+		</fieldset class="form-group">
+	</form>
+	</td>
+</table>	    
+{% if campeones %}
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center table-responsive">
+	<table id="table" class="display" style="width:95%">
+		<thead>
+			  <tr>
+				<th>#</th>
+				<th onclick="sortTable(1)">Nombre </th>
+				<th>Fecha de Lanzamiento </th>
+				<th onclick="sortNumeric(3)">Porcentaje de Victoria (%)</th>
+				<th onclick="sortNumeric(4)">Porcentaje de Baneo (%)</th>
+				<th onclick="sortNumeric(5)">Popularidad (%)</th>
+			</tr>
+		</thead>
+	{% for row in campeones %}
+		<tbody>
+			<tr>
+				<td><img src={{row.imagen}}></img></td>
+				<td>{{row.nombre}}</td>
+				<td>{{row.fechaLanzamiento}}</td>
+				<td>{{row.winRate}}</td>
+				<td>{{row.banRate}}</td>
+				<td>{{row.popularidad}}</td>
+			</tr>	
+		</tbody>    
+	{% endfor %}
+	</table>
+</div>
+{% endif %}
+{% endblock %}
